@@ -1,0 +1,58 @@
+﻿@model BIMP.Models.users
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <!-- This file has been downloaded from Bootsnipp.com. Enjoy! -->
+    <title>Password Strength Meter - Bootsnipp.com</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Content/style.css" rel="stylesheet" />
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+</head>
+@Html.ValidationSummary(true)
+<body>
+    <div class="container">
+        <div class="row" id="pwd-container">
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                <section class="login-form">
+                    <form method="post" action="#" role="login">
+                        <img src="http://i.imgur.com/RcmcLv4.png" class="img-responsive" alt="" />
+                        @Html.TextBoxFor(u => u.USER_ID, new { name = "USER_ID", placeholder = "ID", @class = "form-control input-lg" })
+
+                        @Html.PasswordFor(u => u.PASSWORD, new { name = "PASSWORD", placeholder = "PASSWORD", @class = "form-control input-lg", required = "" })
+                        <div>
+                            <label id="result"> </label>
+                        </div>
+
+                        <button type="submit" name="go" class="btn btn-lg btn-primary btn-block">로그인</button>
+                        <div>
+                            <a href="/Auth/Registration">회원가입</a> or <a href="#">비밀번호 잃어버림</a>
+                        </div>
+
+                    </form>
+                    <div class="form-links">
+                        <a href="#">www.naver.com</a>
+                    </div>
+                </section>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            var result = '@ViewBag.Result';
+            if (result == "False") {
+                $("#result").text("아이디와 비밀번호를 다시 확인해주세요.");
+                $("#result").css("background-color", "red").css('color','white');
+            }
+
+        });
+    </script>
+</body>
+</html>

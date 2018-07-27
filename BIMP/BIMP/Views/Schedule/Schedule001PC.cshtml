@@ -1,0 +1,259 @@
+﻿@model BIMP.Models.schedules
+@using BIMP.Models;
+@{
+    Layout = null;
+    string schedule_no = Model.SCHEDULE_NO.ToString();
+    string start_dt_time = ViewBag.Time;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script src="~/Scripts/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="~/Content/jquery-ui.min.css" />
+    <link rel="stylesheet" href="~/Content/jquery-ui.theme.min.css" />
+    <link rel="stylesheet" href="~/Content/jquery-ui.structure.min.css" />
+
+    <!-- 달력 -->
+
+    <script src="~/Scripts/common.js"></script>
+    <link rel="stylesheet" href="~/Content/Menu.css" />
+    <title>일정등록</title>
+</head>
+<body>
+    <form id="scheduleForm">
+        <input type="hidden" id="schedule_no"  name="schedule_no" value="@schedule_no" />
+        <nav class="popup-header" style="background-color: white;">
+        </nav>
+        <div class="popup-container" style="height:700px; overflow-y:scroll;">
+            <div>
+                <div class="col-xs-1" style="margin-top:8px;">
+                    <label style="font-size:15px">고객명</label>
+                </div>
+                <div class="col-xs-5" style="margin-bottom:15px;">
+                    @*<input class="form-control input-lg" type="text" value="@order_name" style="background-color:white;" />*@
+                    @Html.TextBoxFor(u => u.ORDER_NAME, new { name = "ORDER_NAME", placeholder = "고객명", @class = "form-control input-lg", required = "" })
+                </div>
+                <div class="col-xs-1" style="margin-top:8px;">
+                    <label style="font-size:15px">번호</label>
+                </div>
+                <div class="col-xs-5" style="margin-bottom:15px;">
+                    @*<input class="form-control input-lg" type="text" value="@order_phone" style="background-color:white;" />*@
+                    @Html.TextBoxFor(u => u.ORDER_PHONE, new { name = "ORDER_NAME", placeholder = "고객명", @class = "form-control input-lg", required = "" })
+
+                </div>
+            </div>
+
+            <div>
+                <div class="col-xs-1" style="margin-top:8px;">
+                    <label style="font-size:15px">날짜</label>
+                </div>
+                <div class="col-xs-5" style="margin-bottom:15px;">
+                    @*<input class="form-control datepicker input-lg" type="text" value="@start_dt" style="background-color:white;" />*@
+                    @Html.TextBoxFor(u => u.START_DT, new { name = "START_DT", placeholder = "출발일 클릭하세요", @class = "form-control datepicker input-lg", required = "", value = "2011-11-11" })
+                </div>
+                <div class="col-xs-1" style="margin-top:8px;">
+                    <label style="font-size:15px">시간</label>
+                </div>
+                <div class="col-xs-5" style="margin-bottom:15px;">
+                    @*<input class="form-control input-lg" type="text" value="@start_dt_time" style="background-color:white;" />*@
+                    <input type="text" id="start_time" name="start_time" placeholder="출발시간" class="form-control input-lg" value="@start_dt_time" />
+
+                </div>
+            </div>
+            <div class="col-xs-1" style="margin-top:8px;">
+                <label style="font-size:15px">일정</label>
+            </div>
+            <div class="col-xs-11" style="margin-bottom:15px;">
+                @*<textarea class="form-control input-lg" cols="40" style="background-color:white">@schedule_contents</textarea>*@
+                @Html.TextAreaFor(u => u.SCHEDULE_CONTENTS, new { name = "SCHEDULE_CONTENTS", placeholder = "일정", @class = "form-control input-lg", required = "" })
+
+            </div>
+
+            <div class="col-xs-1" style="margin-top:8px;">
+                <label style="font-size:15px">인승</label>
+            </div>
+            <div class="col-xs-11" style="margin-bottom:15px;">
+                @*<input class="form-control input-lg" type="text" value="@seater" style="background-color:white;" />*@
+                @Html.TextBoxFor(u => u.SEATER, new { name = "SEATER", placeholder = "인승", @class = "form-control input-lg", required = "" })
+
+            </div>
+
+            <div>
+                <div class="col-xs-1" style="margin-top:8px;">
+                    <label style="font-size:15px">기사명</label>
+                </div>
+                <div class="col-xs-5" style="margin-bottom:15px;">
+                    @*<input class="form-control input-lg" type="text" value="@driver_name" style="background-color:white;" />*@
+                    @Html.TextBoxFor(u => u.DRIVER_NAME, new { name = "ORDER_NAME", placeholder = "기사명", @class = "form-control input-lg", required = "" })
+
+                </div>
+                <div class="col-xs-1" style="margin-top:8px;">
+                    <label style="font-size:15px">차번호</label>
+                </div>
+                <div class="col-xs-5" style="margin-bottom:15px;">
+                    @*<input class="form-control input-lg" type="text" value="@driver_car_number" style="background-color:white;" />*@
+                    @Html.TextBoxFor(u => u.DIVER_CAR_NUMBER, new { name = "DIVER_CAR_NUMBER", placeholder = "차량번호", @class = "form-control input-lg", required = "" })
+
+                </div>
+            </div>
+            <div>
+                <div class="col-xs-2" style="margin-top:8px;">
+                    <label style="font-size:15px">차량금액(고객)</label>
+                </div>
+                <div class="col-xs-4" style="margin-bottom:15px;">
+                    @*<input class="form-control input-lg" type="text" value="@car_price" style="background-color:white;" />*@
+                    @Html.TextBoxFor(u => u.CAR_PRICE, new { name = "CAR_PRICE", placeholder = "차량금액(고객)", @class = "form-control input-lg" })
+
+                </div>
+                <div class="col-xs-2" style="margin-top:8px;">
+                    <label style="font-size:15px">배차금액(기사)</label>
+                </div>
+                <div class="col-xs-4" style="margin-bottom:15px;">
+                    @*<input class="form-control input-lg" type="text" value="@dispatch_price" style="background-color:white;" />*@
+                    @Html.TextBoxFor(u => u.DISPATCH_PRICE, new { name = "Dispatch_PRICE", placeholder = "배차금액(기사)", @class = "form-control input-lg" })
+
+                </div>
+            </div>
+            <div class="col-xs-2" style="margin-top:8px;">
+                <label style="font-size:15px">결제방법</label>
+            </div>
+            <div class="col-xs-10" style="margin-bottom:15px;">
+                @*<select class="form-control btn-warning" id="bilinggu">
+                    <option value="카드">카드</option>
+                    <option value="현금">현금</option>
+                    <option value="세금계산서">세금계산서</option>
+                </select>*@
+                @Html.DropDownListFor(u => u.BILLING_GU, new SelectList(Enum.GetValues(typeof(BILLING_GUBUN))), "결제방법", new { @class = "form-control btn-warning" })
+
+            </div>
+
+            <div>
+                <div class="col-xs-1" style="margin-top:8px;">
+                    <label style="font-size:15px">예약금:</label>
+                </div>
+                <div class="col-xs-5" style="margin-bottom:15px;">
+                    @*<input class="form-control input-lg" type="text" value="@deposit" style="background-color:white;" />*@
+                    @Html.TextBoxFor(u => u.DEPOSIT, new { name = "DEPOSIT_YN", placeholder = "예약금", @class = "form-control input-lg" })
+
+
+                </div>
+                <div class="col-xs-2" style="margin-top:8px;">
+                    <label style="font-size:15px">예약금 입금일</label>
+                </div>
+                <div class="col-xs-4" style="margin-bottom:15px;">
+                    @*<input class="form-control datepicker input-lg" type="text" value="@deposit_dt" style="background-color:white;" />*@
+                    @Html.TextBoxFor(u => u.DEPOSIT_DT, new { name = "DEPOSIT_DT", placeholder = "입금일 클릭하세요", @class = "form-control datepicker input-lg" })
+
+                </div>
+            </div>
+
+            <div>
+                <div class="col-xs-1" style="margin-top:8px;">
+                    <label style="font-size:15px">전액:</label>
+                </div>
+                <div class="col-xs-5" style="margin-bottom:15px;">
+                    @*<input class="form-control input-lg" type="text" value="@full_amount_yn" style="background-color:white;" />*@
+                    @Html.DropDownListFor(u => u.FULL_AMOUNT_YN, new SelectList(Enum.GetValues(typeof(PAYMENT))), "입금안됨", new { @class = "form-control btn-warning" })
+
+
+                </div>
+                <div class="col-xs-2" style="margin-top:8px;">
+                    <label style="font-size:15px">전액 입금일</label>
+                </div>
+                <div class="col-xs-4" style="margin-bottom:15px;">
+                    @*<input class="form-control datepicker input-lg" type="text" value="@full_amount_dt" style="background-color:white;" />*@
+                    @Html.TextBoxFor(u => u.FULL_AMOUNT_DT, new { name = "FULL_AMOUNT_DT", placeholder = "입금일 클릭하세요", @class = "form-control datepicker input-lg" })
+
+                </div>
+            </div>
+
+            <div>
+                <div class="col-xs-1" style="margin-top:8px;">
+                    <label style="font-size:15px">기사:</label>
+                </div>
+                <div class="col-xs-5" style="margin-bottom:15px;">
+                    @*<input class="form-control input-lg" type="text" value="@driver_amount_yn" style="background-color:white;" />*@
+                    @Html.DropDownListFor(u => u.DRIVER_AMOUNT_YN, new SelectList(Enum.GetValues(typeof(PAYMENT))), "입금안됨", new { @class = "form-control btn-warning" })
+
+
+                </div>
+                <div class="col-xs-2" style="margin-top:8px;">
+                    <label style="font-size:15px">기사 입금일</label>
+                </div>
+                <div class="col-xs-4" style="margin-bottom:15px;">
+                    @*<input class="form-control datepicker input-lg" type="text" value="@driver_amount_dt" style="background-color:white;" />*@
+                    @Html.TextBoxFor(u => u.DRIVER_AMOUNT_DT, new { name = "DRIVER_AMOUNT_DT", placeholder = "입금일 클릭하세요", @class = "form-control datepicker input-lg" })
+
+                </div>
+            </div>
+
+            <div class="col-xs-12" style="margin-bottom:15px;">
+                @*<textarea class="form-control input-lg" cols="40" placeholder="비고" style="background-color:white">@remark</textarea>*@
+                @Html.TextAreaFor(u => u.REMARK, new { name = "SCHEDULE_CONTENTS", placeholder = "비고", @class = "form-control input-lg" })
+
+            </div>
+
+        </div>
+
+        <nav class="popup-footer;" style="text-align:center;">
+            <span id="validationMsg"></span>
+            <button id="btnSave" class="btn btn-success">
+                저장
+            </button>
+
+            <button id="btnClose" type="button" class="btn btn-danger">
+                닫기
+            </button>
+        </nav>
+    </form>
+    <script type="text/javascript">
+        $(function () { // will trigger when the document is ready
+            $.datepicker.setDefaults({
+                monthNames: ['년 1월', '년 2월', '년 3월', '년 4월', '년 5월', '년 6월', '년 7월', '년 8월', '년 9월', '년 10월', '년 11월', '년 12월'],
+                dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+                showMonthAfterYear: true,
+                dateFormat: 'yy-mm-dd',  // 년월일 표시방법  yy-mm-dd 또는 yymmdd
+                buttonImageOnly: true,
+                buttonText: "달력",
+            });
+
+            $('.datepicker').datepicker(); //Initialise any date pickers
+
+            $("#btnClose").click(function () {
+                closePopUp(self);
+            });
+            $('#btnSave').click(function () {
+                cmdSave();
+            })
+        });
+
+
+        function cmdSave() {
+            $("#scheduleForm").submit(function (event) {
+                $.ajax({
+                    type: 'post',
+                    async: true,
+                    url: '/Schedule/Schedule001PC',
+                    data: $(this).serialize(),
+                    success: function (data) {
+                        if (data != null) {
+                            parent.cmdSearch();
+                            closePopUp(self);
+                        }
+                    }
+                });
+            });
+        }
+    </script>
+</body>
+</html>
+

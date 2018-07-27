@@ -1,0 +1,175 @@
+﻿@model IEnumerable<BIMP.Models.schedules>
+
+@using BIMP.Models;
+@{
+    Layout = null;
+    string callbackMSG = ViewBag.Message;
+
+    string order_name = Model.First().ORDER_NAME;
+    string order_phone = Model.First().ORDER_PHONE;
+    int timeLength = Model.First().START_DT.Length;
+    string start_dt = Model.First().START_DT.Substring(0, 10);
+    string start_dt_time = Model.First().START_DT.Substring(10, timeLength-10);
+    string schedule_contents = Model.First().SCHEDULE_CONTENTS;
+    string seater = Model.First().SEATER;
+    string driver_name = Model.First().DRIVER_NAME;
+    string driver_car_number = Model.First().DIVER_CAR_NUMBER;
+    string car_price = Model.First().CAR_PRICE;
+    string dispatch_price = Model.First().DISPATCH_PRICE;
+    string billing_gu = Model.First().BILLING_GU.ToString();
+    string deposit = Model.First().DEPOSIT;
+    string deposit_dt = Model.First().DEPOSIT_DT;
+    string full_amount_yn = Model.First().FULL_AMOUNT_YN;
+    string full_amount_dt = Model.First().FULL_AMOUNT_DT;
+    string driver_amount_yn = Model.First().DRIVER_AMOUNT_YN;
+    string driver_amount_dt = Model.First().DRIVER_AMOUNT_DT;
+    string remark = Model.First().REMARK;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script src="~/Scripts/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="~/Content/jquery-ui.min.css" />
+    <link rel="stylesheet" href="~/Content/jquery-ui.theme.min.css" />
+    <link rel="stylesheet" href="~/Content/jquery-ui.structure.min.css" />
+
+    <!-- 달력 -->
+
+    <script src="~/Scripts/common.js"></script>
+    <link rel="stylesheet" href="~/Content/Menu.css" />
+    <title>일정등록</title>
+</head>
+<body>
+    <form id="scheduleForm">
+        <nav class="popup-header" style="background-color: white;">
+        </nav>
+        <div class="popup-container" style="height:700px; overflow-y:scroll;">
+            <div>
+                <div class="col-xs-6" style="margin-bottom:15px;">
+                        <input class="form-control input-lg" type="text" value="@order_name" readonly="readonly" style="background-color:white;" />
+                </div>
+                <div class="col-xs-6" style="margin-bottom:15px;">
+                    <input class="form-control input-lg" type="text" value="@order_phone" readonly="readonly" style="background-color:white;" />
+                </div>
+            </div>
+
+            <div>
+                <div class="col-xs-6" style="margin-bottom:15px;">
+                    <input class="form-control input-lg" type="text" value="@start_dt" readonly="readonly" style="background-color:white;" />
+
+                </div>
+                <div class="col-xs-6" style="margin-bottom:15px;">
+                    <input class="form-control input-lg" type="text" value="@start_dt_time" readonly="readonly" style="background-color:white;" />
+                </div>
+            </div>
+
+            <div class="col-xs-12" style="margin-bottom:15px;">
+                <textarea class="form-control input-lg" cols="40" readonly="readonly" style="background-color:white">@schedule_contents</textarea>
+            </div>
+
+            <div class="col-xs-12" style="margin-bottom:15px;">
+                <input class="form-control input-lg" type="text" value="@seater" readonly="readonly" style="background-color:white;" />
+            </div>
+
+            <div>
+                <div class="col-xs-6" style="margin-bottom:15px;">
+                    <input class="form-control input-lg" type="text" value="@driver_name" readonly="readonly" style="background-color:white;" />
+                </div>
+                <div class="col-xs-6" style="margin-bottom:15px;">
+                    <input class="form-control input-lg" type="text" value="@driver_car_number" readonly="readonly" style="background-color:white;" />
+                </div>
+            </div>
+            <div>
+                <div class="col-xs-6" style="margin-bottom:15px;">
+                    <input class="form-control input-lg" type="text" value="@car_price" readonly="readonly" style="background-color:white;" />
+                </div>
+                <div class="col-xs-6" style="margin-bottom:15px;">
+                    <input class="form-control input-lg" type="text" value="@dispatch_price" readonly="readonly" style="background-color:white;" />
+                </div>
+            </div>
+
+            <div class="col-xs-12" style="margin-bottom:15px;">
+                <input class="form-control input-lg" type="text" value="@billing_gu" readonly="readonly" style="background-color:white;" />
+            </div>
+
+            <div>
+                <div class="col-xs-1" style="margin-top:8px;">
+                    <label style="font-size:15px">예약금:</label>
+                </div>
+                <div class="col-xs-5" style="margin-bottom:15px;">
+                    <input class="form-control input-lg" type="text" value="@deposit" readonly="readonly" style="background-color:white;" />
+
+                </div>
+
+                <div class="col-xs-6" style="margin-bottom:15px;">
+                    <input class="form-control input-lg" type="text" value="@deposit_dt" readonly="readonly" style="background-color:white;" />
+                </div>
+            </div>
+
+            <div>
+                <div class="col-xs-1" style="margin-top:8px;">
+                    <label style="font-size:15px">전액:</label>
+                </div>
+                <div class="col-xs-5" style="margin-bottom:15px;">
+                    <input class="form-control input-lg" type="text" value="@full_amount_yn" readonly="readonly" style="background-color:white;" />
+
+                </div>
+
+                <div class="col-xs-6" style="margin-bottom:15px;">
+                    <input class="form-control input-lg" type="text" value="@full_amount_dt" readonly="readonly" style="background-color:white;" />
+
+                </div>
+            </div>
+
+            <div>
+                <div class="col-xs-1" style="margin-top:8px;">
+                    <label style="font-size:15px">기사:</label>
+                </div>
+                <div class="col-xs-5" style="margin-bottom:15px;">
+                    <input class="form-control input-lg" type="text" value="@driver_amount_yn" readonly="readonly" style="background-color:white;" />
+
+
+                </div>
+
+                <div class="col-xs-6" style="margin-bottom:15px;">
+                    <input class="form-control input-lg" type="text" value="@driver_amount_dt" readonly="readonly" style="background-color:white;" />
+
+                </div>
+            </div>
+
+            <div class="col-xs-12" style="margin-bottom:15px;">
+                <textarea class="form-control input-lg" cols="40" readonly="readonly" style="background-color:white">@remark</textarea>
+            </div>
+
+        </div>
+
+        <nav class="popup-footer;" style="text-align:center;">
+            <span id="validationMsg"></span>
+            <button id="btnClose" type="button" class="btn btn-danger">
+                닫기
+            </button>
+        </nav>
+    </form>
+    <script type="text/javascript">
+        $(function () { // will trigger when the document is ready
+            $("#btnClose").click(function () {
+                closePopUp(self);
+            });
+        })
+        function closeSelf() {
+            closePopUp(self);
+        }
+                    
+    </script>
+</body>
+</html>
+
