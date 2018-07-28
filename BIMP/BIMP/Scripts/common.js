@@ -1,6 +1,7 @@
 ﻿function modalWindowShow(src, title, cancelFunc, showFunc) {
     loadComcdCookieAndRemoveOthers();
     src = src;
+
      if ($("#myWindowModal").attr("id") == null) {
         var html = "";
         html += "<div class=\"modal fade\" id=\"myWindowModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"myModalLabel\" aria-hidden=\"true\"";
@@ -24,6 +25,7 @@
     var html = "";
     html += "<iframe frameborder='0' scrolling='no' width='100%' height='750px;' src='" + src + "'></iframe>";
     $('#myWindowModalBody').html(html);
+    $('#myModalLabel').text(title);
     /*if (typeof showFunc == "function") {
         showFunc();
     }*/

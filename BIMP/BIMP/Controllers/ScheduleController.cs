@@ -5,10 +5,18 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using PagedList;
+using Telegram.Bot;
+using Telegram.Bot.Args;
+using Telegram.Bot.Types;
+using Telegram.Bot.Types.Enums;
+using Telegram.Bot.Types.ReplyMarkups;
+
 namespace BIMP.Controllers
 {
     public class ScheduleController : Controller
     {
+        private static readonly TelegramBotClient Bot = new TelegramBotClient("654374778:AAGxy-Q6JNx7eEbWzZnnU5uW8pVuvQ44_9E");
+
         // GET: Schedule
         public ActionResult Schedule001MA(int? page)
         {
@@ -85,6 +93,9 @@ namespace BIMP.Controllers
                 db.Schedules.Add(schedule);
                 db.SaveChanges();
             }
+
+            ChatId ChatId = new ChatId(295219317);
+            Bot.SendTextMessageAsync(ChatId, schedules.ORDER_NAME+"님의 일정이 추가되었습니다");
             return "success";
         }
 
