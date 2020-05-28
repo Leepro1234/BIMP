@@ -1,0 +1,70 @@
+﻿@model IEnumerable<BIMP.Models.Companys>
+
+@using BIMP.Models;
+@{
+    Layout = null;
+    string callbackMSG = ViewBag.Message;
+
+    string companyNm = Model.First().COMPANY_NM;
+    string companyPhone= Model.First().COMPANY_PHONE;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script src="~/Scripts/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="~/Content/jquery-ui.min.css" />
+    <link rel="stylesheet" href="~/Content/jquery-ui.theme.min.css" />
+    <link rel="stylesheet" href="~/Content/jquery-ui.structure.min.css" />
+
+    <!-- 달력 -->
+
+    <script src="~/Scripts/common.js"></script>
+    <link rel="stylesheet" href="~/Content/Menu.css" />
+    <title>상세보기</title>
+</head>
+<body>
+    <form id="scheduleForm">
+        <nav class="popup-header" style="background-color: white;">
+        </nav>
+        <div class="popup-container" style="height:700px; overflow-y:scroll;">
+            <div>
+                <div class="col-xs-6" style="margin-bottom:15px;">
+                        <input class="form-control input-lg" type="text" value="@companyNm" readonly="readonly" style="background-color:white;" />
+                </div>
+                <div class="col-xs-6" style="margin-bottom:15px;">
+                    <input class="form-control input-lg" type="text" value="@companyPhone" readonly="readonly" style="background-color:white;" />
+                </div>
+            </div>
+
+        </div>
+
+        <nav class="popup-footer;" style="text-align:center;">
+            <span id="validationMsg"></span>
+            <button id="btnClose" type="button" class="btn btn-danger">
+                닫기
+            </button>
+        </nav>
+    </form>
+    <script type="text/javascript">
+        $(function () { // will trigger when the document is ready
+            $("#btnClose").click(function () {
+                closePopUp(self);
+            });
+        })
+        function closeSelf() {
+            closePopUp(self);
+        }
+                    
+    </script>
+</body>
+</html>
+

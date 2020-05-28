@@ -1,0 +1,145 @@
+﻿@model BIMP.Models.Sales
+@using BIMP.Models;
+@{
+    Layout = null;
+
+    string callbackMSG = ViewBag.Message;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script src="~/Scripts/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="~/Content/jquery-ui.min.css" />
+    <link rel="stylesheet" href="~/Content/jquery-ui.theme.min.css" />
+    <link rel="stylesheet" href="~/Content/jquery-ui.structure.min.css" />
+
+    <!-- 달력 -->
+
+    <script src="~/Scripts/common.js"></script>
+    <link rel="stylesheet" href="~/Content/Menu.css" />
+    <title>매출등록</title>
+</head>
+<body>
+    <form id="GoodsForm">
+        <nav class="popup-header" style="background-color: white;">
+        </nav>
+        <div>
+            <div class="popup-container" style="height:200px;">
+                <div class="row">
+                    <div class="col-xs-6" style="margin-bottom:15px;">
+                        @Html.DropDownListFor(u => u.COMPANY_NO, (SelectList)ViewBag.ComapnysSelect, "업체리스트", new { @class = "form-control btn-warning" })
+                    </div>
+                    <div class="col-xs-6" style="margin-bottom:15px;">
+                        @Html.DropDownListFor(u => u.GOODS_NO, (SelectList)ViewBag.GoodsSelect, "상품리스트", new { @class = "form-control btn-warning" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6" style="margin-bottom:15px;">
+                        @Html.TextBoxFor(u => u.PRICE, new { name = "PRICE", placeholder = "단가", @class = "form-control input-lg", required = "" })
+                    </div>
+                    <div class="col-xs-6" style="margin-bottom:15px;">
+                        @Html.TextBoxFor(u => u.QTY, new { name = "QTY", placeholder = "수량", @class = "form-control input-lg" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6" style="margin-bottom:15px;">
+                        @Html.TextBoxFor(u => u.COLLECTAMT, new { name = "COLLECTAMT", placeholder = "수금금액", @class = "form-control input-lg" })
+                    </div>
+                    <div class="col-xs-6" style="margin-bottom:15px;">
+                        @Html.DropDownListFor(u => u.SALEGU, new SelectList(Enum.GetValues(typeof(SALEGU))), "결제방법", new { @class = "form-control btn-warning" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6" style="margin-bottom:15px;">
+                        @Html.DropDownListFor(u => u.RTNYN, new SelectList(Enum.GetValues(typeof(RTNYN))), "반품구분", new { @class = "form-control btn-warning" })
+                    </div>
+                    <div class="col-xs-6" style="margin-bottom:15px;">
+                        @Html.TextBoxFor(u => u.RGSDT, new { name = "RGSDT", placeholder = "매출일자", @class = "form-control datepicker input-lg", required = "" })
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <nav class="popup-footer;" style="text-align:center;">
+            <span id="validationMsg"></span>
+            <button id="btnSave" class="btn btn-success">
+                저장
+            </button>
+            <button id="btnClose" type="button" class="btn btn-danger">
+                닫기
+            </button>
+        </nav>
+    </form>
+    <script type="text/javascript">
+        $(function () { // will trigger when the document is ready
+            $.datepicker.setDefaults({
+                /* 옵션 예제
+                dateFormat:'yy.mm.dd', //선택된 날짜 포맷(yyyy.mm.dd)
+                monthNamesShort: ['1월','2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+                monthNames: ['1월','2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+                dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+                dayNamesShot: ['일', '월', '화', '수', '목', '금', '토'],
+                dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'],
+                firstDay: 1, //0: 일요일 부터 시작, 1:월요일 부터 시작
+                autoSize: true, //default: false, input 사이즈를 자동으로 리사이즈.
+                showAnim: "fold", //default: show
+                showButtonPanel: true, //하단에 Today, Done 버튼 Display
+                showWeek: false, //주차 보이기
+                weekHeader: "주차", //default: Wk, 주차 헤드 부분의 명칭 설정
+                changeMonth: true, //월 변경가능
+                changeYear: true, //년 변경가능
+                showMonthAfterYear: true, //년 뒤에 월 표시
+                gotoCurrent: false //default: false, true일 경우에는 Today버튼 클릭 시 현재 일자로 이동하지 못함. false는 가능.
+                */
+                monthNames: ['년 1월', '년 2월', '년 3월', '년 4월', '년 5월', '년 6월', '년 7월', '년 8월', '년 9월', '년 10월', '년 11월', '년 12월'],
+                dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+                showMonthAfterYear: true,
+                dateFormat: 'yy-mm-dd',  // 년월일 표시방법  yy-mm-dd 또는 yymmdd
+                buttonImageOnly: true,
+                buttonText: "달력",
+            });
+
+            $('.datepicker').datepicker(); //Initialise any date pickers
+
+            $("#btnClose").click(function () {
+                closePopUp(self);
+            });
+            $('#btnSave').click(function () {
+                cmdSave();
+            })
+
+        });
+
+        function closeSelf() {
+            closePopUp(self);
+        }
+        function cmdSave() {
+            $("#GoodsForm").submit(function (event) {
+                $.ajax({
+                    type: 'post',
+                    async: false,
+                    url: '/Sale/BatchSales001PA',
+                    data: $(this).serialize(),
+                    success: function (data) {
+                        console.log(data);
+                        if (data != null) {
+                            parent.cmdSearch();
+                            closePopUp(self);
+                        }
+                    }
+                });
+            });
+        }
+    </script>
+</body>
+</html>
+

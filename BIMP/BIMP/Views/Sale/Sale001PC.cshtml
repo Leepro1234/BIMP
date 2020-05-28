@@ -1,0 +1,109 @@
+﻿@model BIMP.Models.Goods
+@using BIMP.Models;
+@{
+    Layout = null;
+    string GoodsNo = Model.GOODS_NO.ToString();
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script src="~/Scripts/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="~/Content/jquery-ui.min.css" />
+    <link rel="stylesheet" href="~/Content/jquery-ui.theme.min.css" />
+    <link rel="stylesheet" href="~/Content/jquery-ui.structure.min.css" />
+
+    <!-- 달력 -->
+
+    <script src="~/Scripts/common.js"></script>
+    <link rel="stylesheet" href="~/Content/Menu.css" />
+    <title>상품수정</title>
+</head>
+<body>
+    <form id="GoodsForm">
+        <input type="hidden" id="GoodsNo"  name="GoodsNo" value="@GoodsNo" />
+        <nav class="popup-header" style="background-color: white;">
+        </nav>
+        <div class="popup-container" style="height:700px; overflow-y:scroll;">
+            <div>
+                <div class="col-xs-1" style="margin-top:8px;">
+                    <label style="font-size:15px">고객명</label>
+                </div>
+                <div class="col-xs-5" style="margin-bottom:15px;">
+                    @*<input class="form-control input-lg" type="text" value="@order_name" style="background-color:white;" />*@
+                    @Html.HiddenFor(moodelItem => moodelItem.GOODS_NO)
+                    @Html.TextBoxFor(moodelItem => moodelItem.GOODS_NM, new { name = "GOODS_NM", placeholder = "상품명", @class = "form-control input-lg", required = "" })
+                </div>
+            </div>
+            <div>
+                <div class="col-xs-6" style="margin-bottom:15px;">
+                    @Html.TextBoxFor(moodelItem => moodelItem.COLOR, new { name = "COLOR", placeholder = "색상", @class = "form-control input-lg", required = "" })
+                </div>
+                <div class="col-xs-6" style="margin-bottom:15px;">
+                    @Html.TextBoxFor(moodelItem => moodelItem.SIZE, new { name = "SIZE", placeholder = "사이즈", @class = "form-control input-lg", required = "" })
+                </div>
+            </div>
+
+        </div>
+
+        <nav class="popup-footer;" style="text-align:center;">
+            <span id="validationMsg"></span>
+            <button id="btnSave" class="btn btn-success">
+                저장
+            </button>
+
+            <button id="btnClose" type="button" class="btn btn-danger">
+                닫기
+            </button>
+        </nav>
+    </form>
+    <script type="text/javascript">
+        $(function () { // will trigger when the document is ready
+            //$.datepicker.setDefaults({
+            //    monthNames: ['년 1월', '년 2월', '년 3월', '년 4월', '년 5월', '년 6월', '년 7월', '년 8월', '년 9월', '년 10월', '년 11월', '년 12월'],
+            //    dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+            //    showMonthAfterYear: true,
+            //    dateFormat: 'yy-mm-dd',  // 년월일 표시방법  yy-mm-dd 또는 yymmdd
+            //    buttonImageOnly: true,
+            //    buttonText: "달력",
+            //});
+
+            //$('.datepicker').datepicker(); //Initialise any date pickers
+
+            $("#btnClose").click(function () {
+                closePopUp(self);
+            });
+            $('#btnSave').click(function () {
+                cmdSave();
+            })
+        });
+
+
+        function cmdSave() {
+            $("#GoodsForm").submit(function (event) {
+                $.ajax({
+                    type: 'post',
+                    async: true,
+                    url: '/Good/Good001PC',
+                    data: $(this).serialize(),
+                    success: function (data) {
+                        if (data != null) {
+                            parent.cmdSearch();
+                            closePopUp(self);
+                        }
+                    }
+                });
+            });
+        }
+    </script>
+</body>
+</html>
+

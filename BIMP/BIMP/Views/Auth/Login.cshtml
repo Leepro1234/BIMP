@@ -49,10 +49,132 @@
             var result = '@ViewBag.Result';
             if (result == "False") {
                 $("#result").text("아이디와 비밀번호를 다시 확인해주세요.");
-                $("#result").css("background-color", "red").css('color','white');
+                $("#result").css("background-color", "red").css('color', 'white');
             }
 
+
+            $.when(a(), b()).then(function () {
+                $.when(c(), d()).then(function () { f(); })
+            });
         });
+        var a = function () {
+            var deferred = $.Deferred();
+
+            try {
+                
+                $.when(ajax1()).then(function () {
+                    ajax2();
+                }).then(function () {
+                    setTimeout(function () { console.log('a성공'); deferred.resolve('성공'); }, 5000);
+                    console.log('1000');
+                });
+            } catch (error) {
+                deferred.reject('실패');
+            }
+            return deferred.promise();
+        }
+
+        var b = function () {
+            var deferred = $.Deferred();
+
+            try {
+
+                setTimeout(function () { console.log('b성공'); deferred.resolve('성공'); }, 8000);
+            } catch (error) {
+                deferred.reject('실패');
+            }
+            return deferred.promise();
+        }
+
+        var c = function () {
+            var deferred = $.Deferred();
+
+            try {
+
+                setTimeout(function () { console.log('c성공'); deferred.resolve('성공'); }, 3000);
+            } catch (error) {
+                deferred.reject('실패');
+            }
+            return deferred.promise();
+        }
+
+        var d = function () {
+            var deferred = $.Deferred();
+
+            try {
+
+                setTimeout(function () { console.log('d성공'); deferred.resolve('성공'); }, 1000);
+            } catch (error) {
+                deferred.reject('실패');
+            }
+            return deferred.promise();
+        }
+
+        var f = function () {
+            var deferred = $.Deferred();
+
+            try {
+
+                setTimeout(function () { console.log('f성공'); deferred.resolve('성공'); }, 3000);
+            } catch (error) {
+                deferred.reject('실패');
+            }
+            return deferred.promise();
+        }
+
+        function ajax1() {
+            return $.ajax({
+                type: 'GET',
+                dataType: "json",
+                url: "/api/Values",
+                async: true,
+                cache: false,
+                success: function (result) {
+                    console.log('ajax1 Success');
+                },
+                error: function (error) {
+                    var status = error.status;
+                    try {
+                        var errorMsg = JSON.parse(error.responseText);
+
+                        if (status == "401") {
+                            getMainPage(window).showLogin();
+                        } else {
+                            modalShow("status : " + status + ", Message : " + errorMsg.Message);
+                        }
+                    } catch (Err) {
+                        modalShow(error.status);
+                    }
+                }
+            });
+        }
+
+        function ajax2() {
+            return $.ajax({
+                type: 'GET',
+                dataType: "json",
+                url: "/api/Values",
+                async: true,
+                cache: false,
+                success: function (result) {
+                    console.log('ajax2 Success');
+                },
+                error: function (error) {
+                    var status = error.status;
+                    try {
+                        var errorMsg = JSON.parse(error.responseText);
+
+                        if (status == "401") {
+                            getMainPage(window).showLogin();
+                        } else {
+                            modalShow("status : " + status + ", Message : " + errorMsg.Message);
+                        }
+                    } catch (Err) {
+                        modalShow(error.status);
+                    }
+                }
+            });
+        }
     </script>
 </body>
 </html>

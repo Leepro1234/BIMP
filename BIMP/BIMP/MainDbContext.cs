@@ -16,5 +16,9 @@ namespace BIMP
         public DbSet<users> users { get; set; }
         public DbSet<Lists> Lists { get; set; }
         public DbSet<schedules> Schedules { get; set; }
+        public DbSet<Companys> Companys { get; set; }
+        public DbSet<Goods> Goods { get; set; }
+        public DbSet<Sales> Sales { get; set; }
+
     }
 }

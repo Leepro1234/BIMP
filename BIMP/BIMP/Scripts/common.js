@@ -1,4 +1,18 @@
-﻿function modalWindowShow(src, title, cancelFunc, showFunc) {
+﻿$.fn.center = function () {
+    this.css({
+        'position': 'fixed',
+        'left': '50%',
+        'top': '30%'
+    });
+    this.css({
+        'margin-left': -this.outerWidth() / 2 + 'px',
+        'margin-top': -this.outerHeight() / 2 + 'px'
+    });
+
+    return this;
+};
+
+function modalWindowShow(src, title, cancelFunc, showFunc) {
     loadComcdCookieAndRemoveOthers();
     src = src;
 
@@ -50,7 +64,7 @@ function modalWindowShowMini(src, title, cancelFunc, showFunc) {
         html += "<div class=\"modal fade\" id=\"myWindowModalMini\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"myModalLabel\" aria-hidden=\"true\"";
         html += " data-backdrop = \"static\"";
         html += " > ";
-        html += "      <div id='myWindowModalMini-dialog' class=\"bizModal-dialog\" style=\"width:500px;\"> ";
+        html += "      <div id='myWindowModalMini-dialog' class=\"bizModal-dialog\" style=\"width:600px;\"> ";
         html += "        <div class=\"modal-content\"> ";
         html += "          <div class=\"modal-header\"> ";
         html += "            <button type=\"button\" class=\"close small\" data-dismiss=\"modal\" aria-hidden=\"true\">&times;</button> ";
@@ -65,8 +79,8 @@ function modalWindowShowMini(src, title, cancelFunc, showFunc) {
         $("body").append(html);
     }
 
-    var html = "";
-    html += "<iframe frameborder='0' scrolling='no' width='100%' height='250px;' src='" + src + "'></iframe>";
+    html = "";
+    html += "<iframe frameborder='0' scrolling='no' width='100%' height='350px;' src='" + src + "'></iframe>";
     $('#myWindowModalMiniBody').html(html);
     /*if (typeof showFunc == "function") {
         showFunc();
@@ -150,10 +164,12 @@ function modalWindowShowMid(src, title, cancelFunc, showFunc) {
         showFunc();
     }*/
     $('#myWindowModalMid').modal('show');
+    $('#myWindowModalMid').position().left()
     $('#myWindowModalMid').unbind("shown.bs.modal");
     $('#myWindowModalMid').unbind("hidden.bs.modal");
     $('#myWindowModalMid').on('hidden.bs.modal', cancelFunc);
     $('#myWindowModalMid-dialog').draggable();
+   
     initModalLocation('myWindowModalMid-dialog');
 }
 
@@ -267,9 +283,9 @@ function getComcdUsridAddedSrc(src) {
 
 
 function initModalLocation(modalname) {
-    $("#" + modalname)[0].style.top = "100px";
-    $("#" + modalname)[0].style.left = "100px";
-
+    //$("#" + modalname)[0].style.top = "100px";
+    //$("#" + modalname)[0].style.left = "100px";
+    $("#" + modalname).center();
 };
 
 function closePopUp(popupWin) {

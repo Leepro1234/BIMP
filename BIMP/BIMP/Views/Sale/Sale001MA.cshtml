@@ -1,0 +1,104 @@
+﻿@model PagedList.IPagedList<BIMP.Models.SalesModel>
+@using PagedList.Mvc;
+@{
+    Uri url = Request.Url;
+
+    int slashCount = url.AbsoluteUri.Split('/').Count();
+}
+
+<script>
+    $(document).ready(function () {
+        var colNumber = 13 //number of table columns
+
+        //for (var i = 0; i < colNumber; i++) {
+        //    var thWidth = $("#grid1").find("th:eq(" + i + ")").width();
+        //    var tdWidth = $("#grid1body").find("td:eq(" + i + ")").width();
+
+        //    $("#grid1body").find("td:eq(" + i + ")").css("width", thWidth + 18);
+        //}
+        $('#btnSaveGoods').click(function () {
+            modalWindowShowMini("/Sale/Sale001PA", "매출등록");
+        });
+
+    });
+    function cmdSearch() {
+        document.location.reload(true);
+    }
+    function showDetailView(GoodsNo) {
+        modalWindowShow("/Good/Good001PB?GoodsNo=" + GoodsNo + "", "상세보기");
+    }
+
+    function companyModify(GoodsNo) {
+        modalWindowShow("/Good/Good001PC?GoodsNo=" + GoodsNo + "", "상품수정");
+    }
+</script>
+<div class="container-fluid text-center">
+    <div class="row content">
+        <div class="col-sm-12 col-md-12 text-left">
+            <div><h1>매출관리</h1></div>
+            <div>
+                <button id="btnSaveGoods" class="btn-success btn">매출등록</button>
+            </div>
+            <br />
+            <div>
+                <table id="grid1" class="table table-bordered">
+                    <colgroup>
+                        <col style="width:10%" />
+                        <col style="width:30%" />
+                        <col style="width:30%" />
+                        <col style="width:10%" />
+                        <col style="width:10%" />
+                        <col style="width:10%" />
+                        <col style="width:17px" />
+
+                    </colgroup>
+                    <thead style="background-color:lightgray;">
+                        <tr style="width:100%;">
+                            <th style="text-align:center;">상품코드</th>
+                            <th style="text-align:center;">업체명</th>
+                            <th style="text-align:center;">상품명</th>
+                            <th style="text-align:center;">단가</th>
+                            <th style="text-align:center;">수량</th>
+                            <th style="text-align:center;">금액</th>
+                            <th></th>
+
+                        </tr>
+                    </thead>
+                    <tbody id="grid1body" style="text-align:center;">
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <th style="text-align:center;">@item.SALE_NO</th>
+                                <td style="text-align:center;">@Html.DisplayFor(modelItem => item.COMPANY_NM)</td>
+                                <td style="text-align:center;">
+                                    @Html.HiddenFor(moodelItem => item.SALE_NO)
+                                    @Html.DisplayFor(modelItem => item.GOODS_NM)
+                                </td>
+                                <td style="text-align:center;">@Html.DisplayFor(modelItem => item.PRICE)</td>
+                                <td style="text-align:center;">@Html.DisplayFor(modelItem => item.QTY)</td>
+                                <td style="text-align:center;">@Html.DisplayFor(modelItem => item.SALEAMT)</td>
+
+                                @*<td style="text-align:center;"><button class="btn-success btn" onclick="showDetailView(@item.GOODS_NO)">상세보기</button></td>*@
+                                @*<td style="text-align:center;">
+                                        <button class="btn-success btn" onclick="companyModify(@item.GOODS_NO)">수정</button>
+                                    </td>*@
+                                <td></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <br />
+                Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+                @Html.PagedListPager(Model, page => Url.Action("GOOD001MA",
+           new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+
